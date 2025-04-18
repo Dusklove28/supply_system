@@ -1,4 +1,4 @@
-package com.ningling.VTO;
+package com.ningling.VO;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "登录返回的数据格式")
-public class userLoginVO implements Serializable{
+public class UserLoginVO implements Serializable{
 
         @ApiModelProperty("主键值")
         private Long id;
@@ -25,6 +25,6 @@ public class userLoginVO implements Serializable{
         @ApiModelProperty("姓名")
         private String name;
 
-//        @ApiModelProperty("jwt令牌")
-//        private String token;
+        @ApiModelProperty("jwt令牌")
+        private String token;
 }

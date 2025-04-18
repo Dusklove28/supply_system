@@ -41,12 +41,13 @@
             <version>8.0.31</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- Spring Security -->
-        <dependency>
+
+        <!-- Spring Security慎重添加 -->
+<!--        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
+-->
         <!-- JWT支持（使用jjwt库） -->
         <dependency>
             <groupId>com.auth0</groupId>
@@ -65,15 +66,23 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.16</version> <!-- 使用最新版本 -->
         </dependency>
+        <!--fastjson-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.76</version>
         </dependency>
-
+        <!--解决 No converter for [class com.ningling.utils.Result] with preset Content-Type 'null']-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <!--对象转换为 JSON 格式-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>2.13.3</version>
         </dependency>
         <!--lombok注解工具-->
         <dependency>
@@ -94,12 +103,20 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--swaggerknife4j是为Java MVC框架集成Swagger生成Api文档的增强解决方案,前身是swagger-bootstrap-ui,取名kni4j是希望它能像一把匕首一样小巧,轻量,并且功能强悍!-->
+        <!--swaggerknife4j是为Java MVC框架集成Swagger生成Api文档的增强解决方案,前身是swagger-bootstrap-ui,
+        取名kni4j是希望它能像一把匕首一样小巧,轻量,并且功能强悍!-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>3.0.2</version>
         </dependency>
+        <!--SpringBoot配置注解处理器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <build>
