@@ -24,17 +24,18 @@ public class UserServiceImpl implements UserSerivice {
         String userName = userLoginDTO.getUserName();
         String password = userLoginDTO.getPassword();
         User user = userMapper.getByUserName(userName);
+        //账户不存在
+        if(user==null){
+            throw new PasswordException(CustomExceptionsConstant.ACCOUNT_NOT_FOUND);
+        }
         //使用MD5解密并比对
         password = DigestUtils.md5DigestAsHex(password.getBytes());
-        //1密码错误
+        //密码错误
         if(!user.getPassword().equals(password)){
             //抛出密码异常
             throw new PasswordException(CustomExceptionsConstant.PASSWORD_ERROR);
         }
-        //2账户不存在
-        if(user==null){
-            throw new PasswordException(CustomExceptionsConstant.ACCOUNT_NOT_FOUND);
-        }
+
         //否则匹配成功
 
         return user;
