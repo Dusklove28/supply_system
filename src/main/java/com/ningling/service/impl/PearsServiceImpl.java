@@ -33,7 +33,7 @@ public class PearsServiceImpl implements PearsService {
     }
 
     @Override
-    public PearsListVO getPearById(int productId) {
+    public PearsListVO getPearById(Long productId) {
 
         Pears p = pearsMapper.getPearById(productId);
 

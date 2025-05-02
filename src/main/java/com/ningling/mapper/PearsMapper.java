@@ -13,7 +13,7 @@ public interface PearsMapper {
     List<Pears> getPearsList();
 
     @Select("select * from products where product_id  = #{productId}")
-    Pears getPearById(int productId);
+    Pears getPearById(Long productId);
 
     @Select("select stock from products where product_id  = #{productId}")
     int checkStockById(int productId);

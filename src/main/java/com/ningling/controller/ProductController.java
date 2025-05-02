@@ -26,7 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/getPearById/{productId}")
-    public Result<PearsListVO> getPearById(@PathVariable int productId){
+    public Result<PearsListVO> getPearById(@PathVariable Long productId){
         return Result.success(pearsService.getPearById(productId));
     }
 

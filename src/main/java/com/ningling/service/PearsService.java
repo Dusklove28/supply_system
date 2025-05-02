@@ -8,7 +8,7 @@ import java.util.List;
 public interface PearsService {
     List<PearsListVO> getPearsList();
 
-    PearsListVO getPearById(int productId);
+    PearsListVO getPearById(Long productId);
 
     boolean checkStockById(int productId);
 }
