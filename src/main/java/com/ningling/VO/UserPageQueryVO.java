@@ -1,12 +1,19 @@
-package com.ningling.Entity;
+package com.ningling.VO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
 @Data
-public class User {
-
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Slf4j
+public class UserPageQueryVO {
     //驼峰命名，需要支持驼峰命名和下划线命名之间的自动映射
     private long userId;//用户id
 
@@ -34,5 +41,4 @@ public class User {
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedTime;
-
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ningling.mapper.CartMapper">
+
+    <select id="findCartById" resultType="com.ningling.Entity.ShoppingCart">
+        select *
+        from shopping_cart_items
+        <where>
+            user_id = #{userId}
+            and
+            product_id = #{productId};
+        </where>
+    </select>
+
+    <update id="updateCartById" parameterType="ShoppingCart">
+        update shopping_cart_items
+    <set>
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="imageUrl != null">
+            image_url = #{imageUrl},
+        </if>
+        <if test="quantity != null">
+            quantity = #{quantity},
+        </if>
+        <if test="price != null">
+            price = #{price},
+        </if>
+        <if test="createdTime != null">
+            created_time = #{createdTime},
+        </if>
+        <if test="updatedTime != null">
+            updated_time = #{updatedTime},
+        </if>
+    </set>
+
+    <where>
+        user_id = #{userId}
+        and
+        product_id = #{productId};
+    </where>
+    </update>
+
+    <insert id="insertCart" parameterType="ShoppingCart" useGeneratedKeys="true" keyProperty="id">
+        insert into shopping_cart_items (
+        user_id, product_id,name, image_url, quantity, price,created_time, updated_time) values
+        (#{userId},#{productId},#{name},#{imageUrl},#{quantity},#{price},#{createdTime},#{updatedTime})
+    </insert>
+
+    <delete id="delete">
+        delete from shopping_cart_items
+    <where>
+        <if test="userId != null and productId != null">
+            user_id = #{userId}
+            and
+            product_id = #{productId}
+        </if>
+        <!-- 添加一个永假条件，防止参数不全时删除全表 -->
+        <if test="userId == null or productId == null">
+            AND 1 = 0  <!-- 无意义条件，确保不删除数据 -->
+        </if>
+     </where>
+    </delete>
+
+</mapper>

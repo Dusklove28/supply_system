@@ -5,7 +5,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/pears?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/pear?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: 123456
       stat-view-servlet:
@@ -14,6 +14,9 @@ spring:
 
 
 mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ningling.Entity
   configuration:
     #开启驼峰命名
     map-underscore-to-camel-case: true
@@ -24,3 +27,13 @@ supply:
     #过期时间为24个小时
     ttl: 86400000
 
+qiniu:
+  kodo:
+    # 配置accessKey
+    accessKey: mZHOXu4XbvAfo-SHZ9ZODT1Y-WmVoPx6XZKlHE3h
+    # 配置secretKey
+    secretKey: BsFfIxcGEwWeoF7qsrfZu464ltYGLbS6iEjrEM0X
+    # 配置空间名称
+    bucket: ninglingpear
+    # 配置域名
+    domain: svjf1en7q.hd-bkt.clouddn.com

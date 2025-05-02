@@ -1,7 +1,12 @@
 package com.ningling.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.ningling.DTO.UserLoginDTO;
+import com.ningling.DTO.UserPageQueryDTO;
 import com.ningling.Entity.User;
+import com.ningling.VO.PageResult;
+import com.ningling.VO.UserPageQueryVO;
 import com.ningling.globalException.CustomExceptionsConstant;
 import com.ningling.globalException.PasswordException;
 import com.ningling.mapper.UserMapper;
@@ -21,9 +26,9 @@ public class UserServiceImpl implements UserSerivice {
     public User userLogin(UserLoginDTO userLoginDTO) {
 
         //获取用户名并根据用户名验证用户密码
-        String userName = userLoginDTO.getUserName();
+        String userName = userLoginDTO.getUsername();
         String password = userLoginDTO.getPassword();
-        User user = userMapper.getByUserName(userName);
+        User user = userMapper.getByUsername(userName);
         //账户不存在
         if(user==null){
             throw new PasswordException(CustomExceptionsConstant.ACCOUNT_NOT_FOUND);
@@ -35,10 +40,30 @@ public class UserServiceImpl implements UserSerivice {
             //抛出密码异常
             throw new PasswordException(CustomExceptionsConstant.PASSWORD_ERROR);
         }
-
         //否则匹配成功
-
         return user;
     }
 
+    @Override
+    public User getUserById(Long id) {
+        User user = userMapper.getUserById(id);
+        return user;
+    }
+
+    @Override
+    public PageResult getPageQuery(UserPageQueryDTO upd) {
+        PageHelper.startPage(upd.getPageNum(), upd.getPageSize());
+        Page<UserPageQueryVO> page = userMapper.pageQueryUsers();
+        PageResult pageResult = PageResult.builder()
+                .total(page.getTotal())
+                .records(page.getResult())
+                .build();
+        return pageResult;
+    }
+
+    @Override
+    public void deleteUserByUserId(int userId, int productId) {
+
+        userMapper.delete(userId,productId);
+    }
 }
