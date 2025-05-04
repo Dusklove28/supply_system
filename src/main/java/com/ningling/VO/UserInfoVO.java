@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -33,7 +35,7 @@ public class UserInfoVO {
 //TODO    private String img;//头像地址
 
     @ApiModelProperty("用户角色")
-    private int roles;//用户权限
+    private List<String> roles;//用户权限
 
 
     @ApiModelProperty("地址")

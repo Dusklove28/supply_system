@@ -2,6 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ningling.mapper.UserMapper">
+    <update id="update">
+        update users
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="roles != null">
+                roles = #{roles},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="createdTime != null">
+                createdTime = #{createdTime},
+            </if>
+            <if test="updatedTime != null">
+                updatedTime = #{updatedTime},
+            </if>
+        </set>
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+
 
     <delete id="delete">
         delete from users
@@ -11,4 +44,14 @@
             </if>
         </where>
     </delete>
+    <select id="pageQueryUsers" resultType="com.ningling.VO.UserPageQueryVO">
+        select * from users
+        <where>
+            <if test="username != null">
+                username like concat('%',#{username},'%')
+            </if>
+        </where>
+        order by createdTime asc
+    </select>
+
 </mapper>

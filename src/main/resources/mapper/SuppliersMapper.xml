@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ningling.mapper.SupplierMapper">
+    <insert id="createSupplier">
+        insert into suppliers(name,contact_person,phone,email,address,created_time,updated_time)
+        values (#{name},#{contactPerson},#{phone},#{email},#{address},#{createdTime},#{updatedTime})
+    </insert>
+
+
+    <select id="getSuppliersList" resultType="com.ningling.VO.SuppilerPageQueryVO">
+        select * from suppliers
+    <where>
+        <if test="name!=null">
+            and name like concat('%',#{name},'%')
+        </if>
+        <if test="contactPerson!=null">
+            and contact_person like concat('%',#{contactPerson},'%')
+        </if>
+        <if test="phone!=null">
+            and phone = #{phone}
+        </if>
+    </where>
+        order by created_time asc
+    </select>
+
+    <update id="updateSupplier">
+        update suppliers
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="contactPerson != null">
+                contact_person = #{contactPerson},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime}
+            </if>
+        </set>
+        <where>
+            supplier_id = #{supplierId}
+        </where>
+    </update>
+</mapper>

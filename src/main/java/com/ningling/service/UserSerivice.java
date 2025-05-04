@@ -4,17 +4,20 @@ import com.ningling.DTO.UserLoginDTO;
 import com.ningling.DTO.UserPageQueryDTO;
 import com.ningling.Entity.User;
 import com.ningling.VO.PageResult;
-import com.ningling.VO.UserPageQueryVO;
+import com.ningling.VO.UserInfoVO;
 
-import java.util.List;
+
 
 public interface UserSerivice {
 
-    public User userLogin(UserLoginDTO userLoginDTO);
+    User userLogin(UserLoginDTO userLoginDTO);
 
-    User getUserById(Long id);
+    UserInfoVO getUserById(Long id);
 
     PageResult getPageQuery(UserPageQueryDTO upd);
 
     void deleteUserByUserId(int userId, int productId);
+
+    void updateUserInfo(User user);
+
 }

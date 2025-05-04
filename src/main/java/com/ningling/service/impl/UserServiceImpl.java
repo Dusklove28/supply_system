@@ -6,14 +6,20 @@ import com.ningling.DTO.UserLoginDTO;
 import com.ningling.DTO.UserPageQueryDTO;
 import com.ningling.Entity.User;
 import com.ningling.VO.PageResult;
+import com.ningling.VO.UserInfoVO;
 import com.ningling.VO.UserPageQueryVO;
 import com.ningling.globalException.CustomExceptionsConstant;
 import com.ningling.globalException.PasswordException;
 import com.ningling.mapper.UserMapper;
 import com.ningling.service.UserSerivice;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Service
@@ -45,20 +51,39 @@ public class UserServiceImpl implements UserSerivice {
     }
 
     @Override
-    public User getUserById(Long id) {
+    public UserInfoVO getUserById(Long id) {
         User user = userMapper.getUserById(id);
-        return user;
+        String roles = user.getRoles();
+        List<String> rolesAfterSplit = Arrays.asList(roles.split(","));
+        UserInfoVO userInfoVO = new UserInfoVO();
+//        BeanUtils.copyProperties(user,userInfoVO);
+        // TODO
+        userInfoVO.setRoles(rolesAfterSplit);
+
+        return userInfoVO;
     }
 
     @Override
     public PageResult getPageQuery(UserPageQueryDTO upd) {
         PageHelper.startPage(upd.getPageNum(), upd.getPageSize());
-        Page<UserPageQueryVO> page = userMapper.pageQueryUsers();
+        Page<UserPageQueryVO> page = userMapper.pageQueryUsers(upd.getUsername());
         PageResult pageResult = PageResult.builder()
                 .total(page.getTotal())
                 .records(page.getResult())
                 .build();
         return pageResult;
+    }
+
+    @Override
+    public void updateUserInfo(User user) {
+
+
+        user.setUpdatedTime(LocalDateTime.now());
+
+        if(userMapper.update(user) <= 0){
+            throw new IllegalArgumentException(("更新失败"));
+        }
+
     }
 
     @Override
