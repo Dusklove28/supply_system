@@ -7,4 +7,26 @@
         INSERT INTO orders (user_id, total_amount, status, created_time, updated_time)
         VALUES (#{userId}, #{totalAmount},#{status}, #{createdTime}, #{updatedTime})
     </insert>
+    <update id="updateOrder">
+        update orders
+        <set>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </set>
+        <where>
+            order_id = #{orderId}
+        </where>
+    </update>
+    <update id="updateOrderDetail">
+        update order_details
+        <set>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime}
+            </if>
+        </set>
+        <where>
+            order_detail_id = #{orderDetailId}
+        </where>
+    </update>
 </mapper>

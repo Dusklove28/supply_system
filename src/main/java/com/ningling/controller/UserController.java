@@ -3,6 +3,7 @@ package com.ningling.controller;
 
 import com.ningling.DTO.UserLoginDTO;
 import com.ningling.DTO.UserPageQueryDTO;
+import com.ningling.DTO.UserRegistrationDTO;
 import com.ningling.Entity.User;
 import com.ningling.VO.PageResult;
 
@@ -31,6 +32,15 @@ public class UserController {
     private UserSerivice userSerivice;
     @Autowired
     private JwtProperties jwtProperties;
+
+    @PostMapping("/registration")
+    @ApiOperation("用户注册")
+    public Result<?> registration(@RequestBody UserRegistrationDTO userRegistrationDTO){
+        if(!userSerivice.registration(userRegistrationDTO)){
+            return Result.error("注册失败");
+        }
+        return Result.success("注册成功");
+    }
     @PostMapping(value = "/login",produces = "application/json")
     @ApiOperation("用户登录")
     public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO) {

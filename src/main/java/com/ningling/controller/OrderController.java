@@ -3,6 +3,7 @@ package com.ningling.controller;
 import com.ningling.DTO.OrderDTO;
 import com.ningling.Entity.Order;
 import com.ningling.VO.OrderVO;
+import com.ningling.VO.OrdersForAdminVO;
 import com.ningling.service.OrderService;
 import com.ningling.utils.Result;
 import io.swagger.annotations.Api;
@@ -37,5 +38,22 @@ public class OrderController {
     public Result<List<OrderVO>> getOrdersList(@PathVariable int userId){
         List<OrderVO> ordersByUserId = orderService.getOrdersByUserId(userId);
         return Result.success(ordersByUserId);
+    }
+
+
+    @PutMapping("/updataOrders")
+    @ApiOperation("更新订单")
+    public Result updateOrder(@RequestBody OrderDTO orderDTO){
+        if(!orderService.updateOrder(orderDTO)){
+            return Result.success("更新失败");
+        }
+        return Result.success("更新成功");
+    }
+
+    @GetMapping("/getAllOrders")
+    @ApiOperation("查询所有订单")
+    public Result<List<OrdersForAdminVO>> getAllOrders(){
+        List<OrdersForAdminVO> orders = orderService.getOrders();
+        return Result.success(orders);
     }
 }

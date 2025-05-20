@@ -1,6 +1,7 @@
 package com.ningling.mapper;
 
 import com.github.pagehelper.Page;
+import com.ningling.DTO.UserRegistrationDTO;
 import com.ningling.Entity.User;
 import com.ningling.VO.PageResult;
 import com.ningling.VO.UserPageQueryVO;
@@ -23,4 +24,6 @@ public interface UserMapper {
     void delete(int userId, int productId);
 
     int update(User userId);
+
+    int insert(UserRegistrationDTO userRegistrationDTO);
 }

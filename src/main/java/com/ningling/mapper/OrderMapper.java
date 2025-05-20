@@ -1,5 +1,6 @@
 package com.ningling.mapper;
 
+import com.ningling.DTO.OrderDTO;
 import com.ningling.Entity.Order;
 import com.ningling.Entity.OrderDetail;
 import org.apache.ibatis.annotations.Insert;
@@ -23,4 +24,11 @@ public interface OrderMapper {
 
     @Select("select * from order_details where order_id = #{orderId}")
     OrderDetail getOrderDetail(long orderId);
+
+    int updateOrder(OrderDTO orderDTO);
+
+    int updateOrderDetail(OrderDetail orderDetail);
+
+    @Select("select * from orders")
+    List<Order> getAllOrders();
 }

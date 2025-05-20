@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ningling.DTO.UserLoginDTO;
 import com.ningling.DTO.UserPageQueryDTO;
+import com.ningling.DTO.UserRegistrationDTO;
 import com.ningling.Entity.User;
 import com.ningling.VO.PageResult;
 import com.ningling.VO.UserInfoVO;
@@ -12,7 +13,6 @@ import com.ningling.globalException.CustomExceptionsConstant;
 import com.ningling.globalException.PasswordException;
 import com.ningling.mapper.UserMapper;
 import com.ningling.service.UserSerivice;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -27,6 +27,17 @@ public class UserServiceImpl implements UserSerivice {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Override
+    public boolean registration(UserRegistrationDTO userRegistrationDTO) {
+        //加密密码
+        String md5DigestAsHex = DigestUtils.md5DigestAsHex(userRegistrationDTO.getPassword().getBytes());
+        userRegistrationDTO.setPassword(md5DigestAsHex);
+        if(userMapper.insert(userRegistrationDTO) <= 0){
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public User userLogin(UserLoginDTO userLoginDTO) {
@@ -55,10 +66,17 @@ public class UserServiceImpl implements UserSerivice {
         User user = userMapper.getUserById(id);
         String roles = user.getRoles();
         List<String> rolesAfterSplit = Arrays.asList(roles.split(","));
-        UserInfoVO userInfoVO = new UserInfoVO();
-//        BeanUtils.copyProperties(user,userInfoVO);
-        // TODO
-        userInfoVO.setRoles(rolesAfterSplit);
+        UserInfoVO userInfoVO = UserInfoVO.builder()
+                .id(user.getUserId())
+                .userName(user.getUsername())
+                .name(user.getName())
+                .phone(user.getPhone())
+                .address(user.getAddress())
+                .roles(rolesAfterSplit)
+                .sex(user.getSex())
+                .createdTime(user.getCreatedTime())
+                .updatedTime(user.getUpdatedTime())
+                .build();
 
         return userInfoVO;
     }
@@ -92,3 +110,4 @@ public class UserServiceImpl implements UserSerivice {
         userMapper.delete(userId,productId);
     }
 }
+

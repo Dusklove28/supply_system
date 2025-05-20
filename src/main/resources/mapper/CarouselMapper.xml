@@ -3,4 +3,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ningling.mapper.CarouselMapper">
 
+    <insert id="insert">
+        insert into carousel_images(image_url, description, created_at, updated_at)
+        values (#{imageUrl},#{description},#{createdAt},#{updateAt})
+    </insert>
+    <update id="update">
+        update carousel_images
+    <set>
+        <if test="imageUrl != null">
+            image_url = #{imageUrl},
+        </if>
+        <if test="description != null">
+            `description` = #{description},
+        </if>
+        <if test="createdAt != null">
+            created_at = #{createdAt},
+        </if>
+        <if test="updatedAt != null">
+            created_at = #{upatedAt}
+        </if>
+    </set>
+    <where>
+        image_id = #{imageId}
+    </where>
+    </update>
 </mapper>

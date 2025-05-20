@@ -11,6 +11,11 @@ spring:
       stat-view-servlet:
         login-username: admin
         login-password: 123456
+  #上传图片限制
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
 
 
 mybatis:

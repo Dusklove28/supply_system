@@ -7,6 +7,7 @@ import com.ningling.VO.CartsItemVO;
 import com.ningling.service.CartService;
 import com.ningling.utils.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,14 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping(value = "/getCartsList/{userId}",produces = "application/json")
+    @ApiOperation("查询购物车")
     public Result<List<CartsItemVO>> getCartsList(@PathVariable int userId){
         List<CartsItemVO> cartsLists = cartService.getCartsList(userId);
         return Result.success(cartsLists);
     }
 
     @PostMapping(value = "/addToCart",produces = "application/json")
+    @ApiOperation("添加购物车")
     public Result addToCart(@RequestBody CartAddDTO cart){
        if(!cartService.addToCart(cart)){
            return Result.error("添加失败");
@@ -37,6 +40,7 @@ public class CartController {
     }
 
     @DeleteMapping("/deleteCartItem/{userId}/{productId}")
+    @ApiOperation("删除购物车")
     public Result deleteCartItem(@PathVariable int userId, @PathVariable int productId){
 
         cartService.deleteCartItem(userId,productId);
@@ -44,6 +48,7 @@ public class CartController {
     }
 
     @PutMapping("/updateQuantity/{userId}/{productId}")
+    @ApiOperation("更新购物车")
     public Result updateQuantity(
             @PathVariable int userId,
             @PathVariable int productId,

@@ -9,12 +9,16 @@ import com.qiniu.storage.model.BatchStatus;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.UUID;
 
 @Component
 public class QiniuKodoUtil {
@@ -133,4 +137,33 @@ public class QiniuKodoUtil {
                 System.err.println(ex.response.toString());
             }
         }
+
+    // 生成上传凭证
+    public String getUploadToken() {
+        Auth auth = Auth.create(accessKey, secretKey);
+        return auth.uploadToken(bucket);
+    }
+
+    // 上传文件并返回访问URL
+    public String uploadFile(MultipartFile file) throws IOException {
+        Configuration cfg = new Configuration(Region.autoRegion());
+        UploadManager uploadManager = new UploadManager(cfg);
+
+        String fileName = "carousel/" + UUID.randomUUID() + "." +
+                FilenameUtils.getExtension(file.getOriginalFilename());
+
+        Response response = uploadManager.put(
+                file.getInputStream(),
+                fileName,
+                getUploadToken(),
+                null,
+                file.getContentType()
+        );
+
+        if (response.isOK()) {
+            return  getFileUrl(fileName);
+        } else {
+            throw new RuntimeException("七牛云上传失败: " + response.bodyString());
+        }
+    }
     }

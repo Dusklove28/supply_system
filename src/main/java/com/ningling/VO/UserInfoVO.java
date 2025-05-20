@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -30,7 +31,7 @@ public class UserInfoVO {
     private String phone;
 
     @ApiModelProperty("性别")
-    private int sex;
+    private String sex;
 
 //TODO    private String img;//头像地址
 
@@ -44,11 +45,9 @@ public class UserInfoVO {
     @ApiModelProperty("状态")
     private int status;//状态
 
-//    @ApiModelProperty("创建时间")
-//    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime createTime;
-//
-//    @ApiModelProperty("更新时间")
-//    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime updateTime;
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createdTime;
+
+    @ApiModelProperty("更新时间")
+    private LocalDateTime updatedTime;
 }

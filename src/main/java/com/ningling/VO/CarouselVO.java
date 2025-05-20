@@ -20,6 +20,6 @@ public class CarouselVO {
     private long id;
     @ApiModelProperty("图片地址")
     private String imgUrl;
-    @ApiModelProperty("图片标题")
-    private String title;
+    @ApiModelProperty("图片描述")
+    private String description;
 }

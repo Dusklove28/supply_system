@@ -20,5 +20,5 @@ public class OrderDTO {
     private double totalAmount;//总金额
     private String phone;//手机号
     private String remark;//备注
-    private int status;//状态1:已支付 0:未支付
+    private int status;//状态0:待付款,1待发货,2待收货,3已退款
 }
