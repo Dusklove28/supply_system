@@ -10,5 +10,12 @@ public interface PearsService {
 
     PearsListVO getPearById(Long productId);
 
-    boolean checkStockById(int productId);
+    boolean checkStockById(Long productId);
+
+
+    boolean update(Pears pears, Long productId);
+
+    List<PearsListVO>  searchPearsList(String keyword);
+
+    List<PearsListVO> getProductsByCategory(Long classificationId);
 }

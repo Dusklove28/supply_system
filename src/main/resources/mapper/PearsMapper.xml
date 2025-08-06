@@ -3,4 +3,56 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ningling.mapper.PearsMapper">
 
+    <update id="update">
+        update products
+        <set>
+            <if test="name != null">
+                `name`  = #{name},
+            </if>
+            <if test="imageUrl != null">
+                image_url  = #{imageUrl},
+            </if>
+            <if test="description != null">
+                `description`  = #{description},
+            </if>
+            <if test="price != null">
+                price  = #{price},
+            </if>
+            <if test="stock != null">
+                stock  = #{stock},
+            </if>
+            <if test="classification != null">
+                classification  = #{classification},
+            </if>
+            <if test="brand != null">
+                brand  = #{brand},
+            </if>
+            <if test="createdTime != null">
+                create_at  = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_at  = #{updateTime}
+            </if>
+        </set>
+        <where>
+            <if test="productId != null">
+                product_id = #{productId}
+            </if>
+        </where>
+    </update>
+
+    <select id="searchPearsList" resultType="com.ningling.Entity.Pears">
+        select * from products
+        <where>
+            name like CONCAT('%', #{keyword}, '%')
+        </where>
+    </select>
+    <select id="getProductsByCategory" resultType="com.ningling.Entity.Pears">
+        select * from products
+        <where>
+            classification = #{classificationId}
+        </where>
+    </select>
+
+
 </mapper>

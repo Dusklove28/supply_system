@@ -17,4 +17,6 @@ public interface CartService {
     void deleteCartItem(int userId, int productId);
 
     boolean update(int userId, int productId, int quantity);
+
+    boolean clearCart(Long userId);
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ningling.mapper.CategoryMapper">
+    <insert id="createCategory">
+        insert into product_classifications(`classification_id`, `name`, `description`, `created_time`, `updated_time`)
+        values ('#{classificationId}','#{name}','#{description}','#{createdTime}','#{updatedTime}')
+    </insert>
+    <update id="update">
+        update product_classifications
+        <set>
+            <if test="categoryName != null">
+                `name` = #{name},
+            </if>
+            <if test="categoryName != null">
+                `description` = #{description},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime}
+            </if>
+        </set>
+        <where>
+            <if test="classificationId != null">
+                classification_id = #{classificationId}
+            </if>
+        </where>
+    </update>
+
+
+    <select id="getCategoryList" resultType="com.ningling.Entity.Category">
+        select * from product_classifications;
+    </select>
+
+    <delete id="deleteCategory">
+        delete from product_classifications
+        <where>
+            classification_id = #{categoryId}
+        </where>
+    </delete>
+</mapper>

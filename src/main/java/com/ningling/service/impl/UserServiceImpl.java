@@ -12,7 +12,7 @@ import com.ningling.VO.UserPageQueryVO;
 import com.ningling.globalException.CustomExceptionsConstant;
 import com.ningling.globalException.PasswordException;
 import com.ningling.mapper.UserMapper;
-import com.ningling.service.UserSerivice;
+import com.ningling.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -23,7 +23,7 @@ import java.util.List;
 
 
 @Service
-public class UserServiceImpl implements UserSerivice {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -105,9 +105,10 @@ public class UserServiceImpl implements UserSerivice {
     }
 
     @Override
-    public void deleteUserByUserId(int userId, int productId) {
+    public boolean deleteUserByUserId(int userId, int productId) {
 
         userMapper.delete(userId,productId);
+        return true;
     }
 }
 

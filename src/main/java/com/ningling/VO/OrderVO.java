@@ -16,7 +16,7 @@ import java.util.List;
 public class OrderVO implements Serializable {
     private long orderId;//订单Id
     private long userId;//用户Id
-    private long procutId;//商品Id
+    private long productId;//商品Id
     private double totalAmount;//总金额
     private int status;//状态
     private int quantity;//数量

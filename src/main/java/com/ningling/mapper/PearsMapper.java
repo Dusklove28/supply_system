@@ -16,5 +16,14 @@ public interface PearsMapper {
     Pears getPearById(Long productId);
 
     @Select("select stock from products where product_id  = #{productId}")
-    int checkStockById(int productId);
+    int checkStockById(Long productId);
+
+    int update(Pears pears);
+
+    List<Pears> searchPearsList(String keyword);
+
+    List<Pears> getProductsByCategory(Long classificationId);
+
+
+    int delete(Long userId);
 }

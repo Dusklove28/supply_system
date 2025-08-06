@@ -1,7 +1,8 @@
 package com.ningling.controller;
 
+import com.ningling.DTO.OrderClearDTO;
 import com.ningling.DTO.OrderDTO;
-import com.ningling.Entity.Order;
+import com.ningling.DTO.PaymentDTO;
 import com.ningling.VO.OrderVO;
 import com.ningling.VO.OrdersForAdminVO;
 import com.ningling.service.OrderService;
@@ -25,12 +26,13 @@ public class OrderController {
 
     @PostMapping("/create")
     @ApiOperation("创建订单")
-    public Result orderCreate(@RequestBody OrderDTO orderDTO){
+    public Result<OrderVO> orderCreate(@RequestBody OrderDTO orderDTO){
 
-        if(!orderService.orderCreate(orderDTO)){
-            return Result.error("订单创建成功");
+        OrderVO orderVO = orderService.orderCreate(orderDTO);
+        if(orderVO!=null){
+            return Result.success(orderVO);
         }
-        return Result.success("订单创建成功");
+        return Result.error("订单创建失败");
     }
 
     @GetMapping("/getOrdersById/{userId}")
@@ -41,7 +43,7 @@ public class OrderController {
     }
 
 
-    @PutMapping("/updataOrders")
+    @PutMapping("/updateOrders")
     @ApiOperation("更新订单")
     public Result updateOrder(@RequestBody OrderDTO orderDTO){
         if(!orderService.updateOrder(orderDTO)){
@@ -56,4 +58,36 @@ public class OrderController {
         List<OrdersForAdminVO> orders = orderService.getOrders();
         return Result.success(orders);
     }
+
+    @DeleteMapping("/deleteOrder/{orderId}")
+    @ApiOperation("查询所有订单")
+    public Result<List<OrdersForAdminVO>> getAllOrders(@PathVariable Long orderId){
+        if(!orderService.deleteOrder(orderId)){
+            return Result.error("删除失败");
+        }
+        return Result.success("删除成功");
+    }
+
+
+    @PostMapping("/payment")
+    @ApiOperation("订单支付")
+    public Result<?> payment(@RequestBody PaymentDTO paymentDTO){
+        if(!orderService.payment(paymentDTO)){
+            return Result.error("支付失败");
+        }
+        return Result.success("支付成功");
+    }
+
+    @PostMapping("/orderClear")
+    @ApiOperation("结算订单")
+    public Result<List<OrderVO>> orderClear(@RequestBody OrderClearDTO orderClearDTO){
+
+        List<OrderVO> orderVOS = orderService.orderClear(orderClearDTO);
+        if(orderVOS == null){
+            return Result.error("结算失败");
+        }
+        return Result.success(orderVOS);
+    }
+
+
 }

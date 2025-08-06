@@ -3,6 +3,7 @@ package com.ningling.mapper;
 import com.ningling.DTO.OrderDTO;
 import com.ningling.Entity.Order;
 import com.ningling.Entity.OrderDetail;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -25,10 +26,16 @@ public interface OrderMapper {
     @Select("select * from order_details where order_id = #{orderId}")
     OrderDetail getOrderDetail(long orderId);
 
-    int updateOrder(OrderDTO orderDTO);
+    int updateOrder(Order order);
 
     int updateOrderDetail(OrderDetail orderDetail);
 
     @Select("select * from orders")
     List<Order> getAllOrders();
+
+    @Delete("delete from orders where orderId = #{orderId}")
+    int deleteOrder(Long orderId);
+
+    @Delete("delete from orders_details where orderId  = #{orderId}")
+    int deleteOrderDetail(Long orderId);
 }

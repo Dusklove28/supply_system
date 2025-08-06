@@ -2,8 +2,10 @@ package com.ningling.service.impl;
 
 import com.ningling.DTO.NoticeReleaseDTO;
 import com.ningling.Entity.Notice;
+import com.ningling.Entity.User;
 import com.ningling.VO.NoticeVO;
 import com.ningling.mapper.NoticeMapper;
+import com.ningling.mapper.UserMapper;
 import com.ningling.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ import java.util.List;
 public class NoticeServiceImpl implements NoticeService {
     @Autowired
     private NoticeMapper noticeMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public boolean insertNotice(NoticeReleaseDTO noticeReleaseDTO) {
@@ -42,11 +47,12 @@ public class NoticeServiceImpl implements NoticeService {
         List<NoticeVO> noticeVOS = new ArrayList<>();
         for (Notice n: notices) {
 
+            User user = userMapper.getUserById(n.getAuthorId());
             NoticeVO noticeVO = NoticeVO.builder()
                     .noticeId(n.getNoticeId())
                     .title(n.getTitle())
                     .content(n.getContent())
-                    .authorId(n.getAuthorId())
+                    .authorId(user.getName())
                     .status(n.getStatus())
                     .isTop(n.getIsTop())
                     .createdTime(n.getCreatedTime())

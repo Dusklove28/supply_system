@@ -22,4 +22,6 @@ public interface CartMapper {
     List<ShoppingCart> findAll(int userId);
 
     int delete(int userId, int productId);
+
+    int clear(Long userId);
 }

@@ -11,11 +11,13 @@
         update orders
         <set>
             <if test="status != null">
-                status = #{status}
+                `status` = #{status}
             </if>
         </set>
         <where>
-            order_id = #{orderId}
+            <if test="orderId != null">
+                 order_id = #{orderId}
+            </if>
         </where>
     </update>
     <update id="updateOrderDetail">

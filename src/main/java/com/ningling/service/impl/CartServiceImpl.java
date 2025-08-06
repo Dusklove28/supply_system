@@ -105,4 +105,12 @@ public class CartServiceImpl implements CartService{
         }
         return true;
     }
+
+    @Override
+    public boolean clearCart(Long userId) {
+        if(cartMapper.clear(userId)<0){
+            return false;
+        }
+        return true;
+    }
 }

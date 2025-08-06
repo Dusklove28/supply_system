@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Order implements Serializable {
-    private long orderId;//订单id
-    private long userId;//用户id
+    private Long orderId;//订单id
+    private Long userId;//用户id
     private double totalAmount;//总金额
     private int status;//状态1:已支付 0:未支付
     private LocalDateTime createdTime;//创建时间

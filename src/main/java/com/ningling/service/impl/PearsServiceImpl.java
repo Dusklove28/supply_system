@@ -50,10 +50,52 @@ public class PearsServiceImpl implements PearsService {
     }
 
     @Override
-    public boolean checkStockById(int productId) {
+    public boolean checkStockById(Long productId) {
         if(pearsMapper.checkStockById(productId) > 0){
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean update(Pears pears, Long productId) {
+        pears.setProductId(productId);
+        pearsMapper.update(pears);
+        return false;
+    }
+
+    @Override
+    public List<PearsListVO> searchPearsList(String keyword) {
+        List<Pears> pearsList = pearsMapper.searchPearsList(keyword);
+        List<PearsListVO> plv = new ArrayList<>();
+        for (Pears p : pearsList) {
+            PearsListVO pearsListVO = PearsListVO.builder()
+                    .id(p.getProductId())
+                    .name(p.getName())
+                    .description(p.getDescription())
+                    .price(p.getPrice())
+                    .imgUrl(p.getImageUrl())
+                    .build();
+            plv.add(pearsListVO);
+        }
+        return plv;
+
+    }
+
+    @Override
+    public List<PearsListVO> getProductsByCategory(Long classificationId) {
+        List<Pears> pearsList = pearsMapper.getProductsByCategory(classificationId);
+        List<PearsListVO> plv = new ArrayList<>();
+        for (Pears p : pearsList) {
+            PearsListVO pearsListVO = PearsListVO.builder()
+                    .id(p.getProductId())
+                    .name(p.getName())
+                    .description(p.getDescription())
+                    .price(p.getPrice())
+                    .imgUrl(p.getImageUrl())
+                    .build();
+            plv.add(pearsListVO);
+        }
+        return plv;
     }
 }

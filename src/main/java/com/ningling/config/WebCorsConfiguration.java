@@ -14,7 +14,7 @@ public class WebCorsConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // 修正路径匹配模式
-                .allowedOriginPatterns("*") // 指定前端地址
+                .allowedOriginPatterns("*") // 指定前端地址,表示允许所有请求访问
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowCredentials(true)

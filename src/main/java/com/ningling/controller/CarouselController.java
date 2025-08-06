@@ -31,6 +31,7 @@ public class CarouselController {
     private QiniuKodoUtil qiniuKodoUtil;
 
     @GetMapping("/getCarouselData")
+    @ApiOperation("/获取轮播图")
     public Result<List<CarouselVO>> getCarouselDara(){
         return Result.success(carouselService.getCarouselData());
     }

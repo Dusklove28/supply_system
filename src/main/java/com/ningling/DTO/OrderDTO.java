@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class OrderDTO {
+    private long orderId;
     private long userId;//用户id
     private long productId;//用户id
     private String address;//地址

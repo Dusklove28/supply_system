@@ -11,7 +11,7 @@ import com.ningling.VO.UserInfoVO;
 import com.ningling.VO.UserLoginVO;
 
 import com.ningling.properties.JwtProperties;
-import com.ningling.service.UserSerivice;
+import com.ningling.service.UserService;
 import com.ningling.utils.JwtUtils;
 import com.ningling.utils.Result;
 import io.swagger.annotations.Api;
@@ -29,14 +29,14 @@ import java.util.*;
 public class UserController {
 
     @Autowired
-    private UserSerivice userSerivice;
+    private UserService userService;
     @Autowired
     private JwtProperties jwtProperties;
 
     @PostMapping("/registration")
     @ApiOperation("用户注册")
     public Result<?> registration(@RequestBody UserRegistrationDTO userRegistrationDTO){
-        if(!userSerivice.registration(userRegistrationDTO)){
+        if(!userService.registration(userRegistrationDTO)){
             return Result.error("注册失败");
         }
         return Result.success("注册成功");
@@ -46,7 +46,7 @@ public class UserController {
     public Result<UserLoginVO> login(@RequestBody UserLoginDTO userLoginDTO) {
 
         //查询数据库
-        User user = userSerivice.userLogin(userLoginDTO);
+        User user = userService.userLogin(userLoginDTO);
 
 
         //登陆成功，返回数据
@@ -78,7 +78,7 @@ public class UserController {
     @GetMapping("/getUserById/{userId}")
     @ApiOperation("用户查询")
     public Result<UserInfoVO> getUserById(@PathVariable Long userId){
-        UserInfoVO user = userSerivice.getUserById(userId);
+        UserInfoVO user = userService.getUserById(userId);
         if(user == null){
             return Result.error("用户信息为空");
         }
@@ -94,22 +94,21 @@ public class UserController {
     @PostMapping("/getUsersList")
     @ApiOperation("用户分页查询")
     public Result<PageResult> getUsersList(@RequestBody UserPageQueryDTO upd){
-        PageResult pageQuery = userSerivice.getPageQuery(upd);
+        PageResult pageQuery = userService.getPageQuery(upd);
         return Result.success(pageQuery);
     }
 
     @PutMapping("/updateUser")
     @ApiOperation("修改用户")
     public Result updateUserInfo(@RequestBody User user){
-        userSerivice.updateUserInfo(user);
+        userService.updateUserInfo(user);
         return Result.success("修改成功");
     }
 
     @DeleteMapping("/deleteUser/{userId}/{productId}")
     @ApiOperation("用户删除")
     public Result deleteUserByUserId(@PathVariable int userId,@PathVariable int productId){
-    //数据库表好多外键限制，还是先写其他的接口
-    //        userService.deleteUserByUserId(userId,productId)
+        userService.deleteUserByUserId(userId,productId);
         return Result.success("模拟删除成功");
     }
 

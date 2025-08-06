@@ -63,5 +63,8 @@
         </if>
      </where>
     </delete>
-
+    <delete id="clear">
+            delete from shopping_cart_items
+            where user_id = #{userId}
+    </delete>
 </mapper>

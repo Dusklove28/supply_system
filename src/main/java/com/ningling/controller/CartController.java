@@ -61,5 +61,13 @@ public class CartController {
     }
 
 
+    @DeleteMapping ("/clear/{userId}")
+    public Result<?> clearCart(@PathVariable Long userId) {
+        // 实现清空购物车的逻辑
+        if(!cartService.clearCart(userId)){
+            return Result.error("清除失败");
+        }
+        return Result.success("清除成功");
+    }
 }
 

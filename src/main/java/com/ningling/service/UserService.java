@@ -9,7 +9,7 @@ import com.ningling.VO.UserInfoVO;
 
 
 
-public interface UserSerivice {
+public interface UserService {
 
     User userLogin(UserLoginDTO userLoginDTO);
 
@@ -17,7 +17,7 @@ public interface UserSerivice {
 
     PageResult getPageQuery(UserPageQueryDTO upd);
 
-    void deleteUserByUserId(int userId, int productId);
+    boolean deleteUserByUserId(int userId, int productId);
 
     void updateUserInfo(User user);
 
